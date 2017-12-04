@@ -1,0 +1,169 @@
+{  
+   "response_code":0,
+   "results":[  
+      {  
+         "category":"Science: Computers",
+         "type":"multiple",
+         "difficulty":"easy",
+         "question":"In any programming language, what is the most common way to iterate through an array?",
+         "correct_answer":"&#039;For&#039; loops",
+         "incorrect_answers":[  
+            "&#039;If&#039; Statements",
+            "&#039;Do-while&#039; loops",
+            "&#039;While&#039; loops"
+         ]
+      },
+      {  
+         "category":"Science: Computers",
+         "type":"multiple",
+         "difficulty":"easy",
+         "question":"What does CPU stand for?",
+         "correct_answer":"Central Processing Unit",
+         "incorrect_answers":[  
+            "Central Process Unit",
+            "Computer Personal Unit",
+            "Central Processor Unit"
+         ]
+      },
+      {  
+         "category":"Science: Computers",
+         "type":"multiple",
+         "difficulty":"easy",
+         "question":"What does GHz stand for?",
+         "correct_answer":"Gigahertz",
+         "incorrect_answers":[  
+            "Gigahotz",
+            "Gigahetz",
+            "Gigahatz"
+         ]
+      },
+      {  
+         "category":"Science: Computers",
+         "type":"multiple",
+         "difficulty":"easy",
+         "question":"The programming language &#039;Swift&#039; was created to replace what other programming language?",
+         "correct_answer":"Objective-C",
+         "incorrect_answers":[  
+            "C#",
+            "Ruby",
+            "C++"
+         ]
+      },
+      {  
+         "category":"Science: Computers",
+         "type":"boolean",
+         "difficulty":"easy",
+         "question":"Linus Torvalds created Linux and Git.",
+         "correct_answer":"True",
+         "incorrect_answers":[  
+            "False"
+         ]
+      },
+      {  
+         "category":"Science: Computers",
+         "type":"multiple",
+         "difficulty":"easy",
+         "question":"In the programming language Java, which of these keywords would you put on a variable to make sure it doesn&#039;t get modified?",
+         "correct_answer":"Final",
+         "incorrect_answers":[  
+            "Static",
+            "Private",
+            "Public"
+         ]
+      },
+      {  
+         "category":"Science: Computers",
+         "type":"boolean",
+         "difficulty":"easy",
+         "question":"The logo for Snapchat is a Bell.",
+         "correct_answer":"False",
+         "incorrect_answers":[  
+            "True"
+         ]
+      },
+      {  
+         "category":"Science: Computers",
+         "type":"multiple",
+         "difficulty":"easy",
+         "question":"What does the Prt Sc button do?",
+         "correct_answer":"Captures what&#039;s on the screen and copies it to your clipboard",
+         "incorrect_answers":[  
+            "Nothing",
+            "Saves a .png file of what&#039;s on the screen in your screenshots folder in photos",
+            "Closes all windows"
+         ]
+      },
+      {  
+         "category":"Science: Computers",
+         "type":"boolean",
+         "difficulty":"easy",
+         "question":"&quot;HTML&quot; stands for Hypertext Markup Language.",
+         "correct_answer":"True",
+         "incorrect_answers":[  
+            "False"
+         ]
+      },
+      {  
+         "category":"Science: Computers",
+         "type":"boolean",
+         "difficulty":"easy",
+         "question":"The Windows 7 operating system has six main editions.",
+         "correct_answer":"True",
+         "incorrect_answers":[  
+            "False"
+         ]
+      }
+   ]
+}
+
+
+            <div id='pontuacao'> 
+                <h1 style='text-align: center' id='hpontuacao'> PONTUACAO 9/10</h1><br><br><br>
+                <div id='divpontuacaoX' class='divpontuacoes'>
+                    <h3> A PERGUMTA ERA ESTAAAAAAAA</h3>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>RESPOSTA CORRETA</button>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>RESPOSTA ERRADA</button>
+                </div>
+                <div id='divpontuacaoX' class='divpontuacoes'>
+                    <h3> A PERGUMTA ERA ESTAAAAAAAA</h3>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>RESPOSTA CORRETA</button>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>RESPOSTA ERRADA</button>
+                </div>
+                <div id='divpontuacaoX' class='divpontuacoes'>
+                    <h3> A PERGUMTA ERA ESTAAAAAAAA</h3>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>RESPOSTA CORRETA</button>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>RESPOSTA ERRADA</button>
+                </div>
+                <div id='divpontuacaoX' class='divpontuacoes'>
+                    <h3> A PERGUMTA ERA ESTAAAAAAAA</h3>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>RESPOSTA CORRETA</button>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>RESPOSTA ERRADA</button>
+                </div>
+                <div id='divpontuacaoX' class='divpontuacoes'>
+                    <h3> A PERGUMTA ERA ESTAAAAAAAA</h3>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>RESPOSTA CORRETA</button>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>RESPOSTA ERRADA</button>
+                </div>
+                <div id='divpontuacaoX' class='divpontuacoes'>
+                    <h3> A PERGUMTA ERA ESTAAAAAAAA</h3>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>RESPOSTA CORRETA</button>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>RESPOSTA ERRADA</button>
+                </div>
+                <div id='divpontuacaoX' class='divpontuacoes'>
+                    <h3> A PERGUMTA ERA ESTAAAAAAAA</h3>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>RESPOSTA CORRETA</button>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>RESPOSTA ERRADA</button>
+                </div>
+                <div id='divpontuacaoX' class='divpontuacoes'>
+                    <h3> A PERGUMTA ERA ESTAAAAAAAA</h3>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>RESPOSTA CORRETA</button>
+                    <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>RESPOSTA ERRADA</button>
+                </div>
+                PONTUACAO
+                     Divs com a pergunta
+                     com a respota errada - vermelho e a correta em verde
+                     Se acertar so tem de ter a resposta correta em verde
+                
+            </div>
+
+

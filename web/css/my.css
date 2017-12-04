@@ -1,0 +1,131 @@
+.footer{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    background-color: #000;
+    padding: 20px 80px;
+    color: white;
+    text-align: center;
+}
+
+.footer2{
+  position: absolute;
+  bottom: -80px;
+  width: 100%;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  background-color: #000;
+}
+
+#contentor{
+    height: 85vh;
+    
+}
+
+.letraBranca{
+    color: #fff;
+}
+
+.TamanhoGrande{
+    font-size: 70px;
+}
+
+#div_butoes_inicio_menu{
+    text-align: -webkit-center;
+    display: table;
+    margin: 0 auto;
+}
+
+#div_escolher_dificuldade{
+    text-align: -webkit-center;
+    display: table;
+    margin: 0 auto;
+}
+#div_respostas_multiplo{
+    display: table;
+    margin: 0 auto;
+    display: block; 
+    margin:30px;
+    width:200px ;
+    height: 100px;
+    font-size: 35px;
+}
+#div_respostas_boolean{
+    display: table;
+    margin: 0 auto;
+    display: block; 
+    margin:30px;
+    width:200px ;
+    height: 100px;
+    font-size: 35px;
+}
+#div_escolher_categoria{
+    display: table;
+    margin: 0 auto;
+    display: block; 
+    margin:60px;
+    width: 400px;
+    height: 150px;
+    text-align: center;
+    font-size: 35px;
+    margin: 0 auto;   
+}
+
+#div_iniciar_jogo{
+    text-align: center; 
+    display: table;
+    margin: 0 auto;  
+}
+
+#div_escolha_multipla{
+    display: table;
+    margin: 0 auto; 
+}
+
+.divpontuacoes{
+    border: 5px solid grey;
+    margin: 25px 50px 10px 10px;
+    padding-left: 20px;
+}
+
+.divsFavQuestions{
+    border: 5px solid grey;
+    margin: 25px 50px 10px 10px;
+    padding-left: 20px;
+    overflow:hidden ;
+}
+
+.divsFavQuestions:last-child{
+    border: 5px solid grey;
+    margin: 25px 50px 80px 10px;
+    padding-left: 20px;
+    overflow:hidden ;
+}
+
+.butoesCategoria{
+    /*margin:30px;*/
+    width:200px;
+    /*height: 100px;*/
+    font-size: 25px;
+}
+
+.butaofav_empty{
+    background: url(../imagens/fav_empty.png);
+    width: 35px;
+    height: 35px;
+    background-repeat: no-repeat;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    float:right;
+}
+
+.butaofav_color{
+    background: url(../imagens/fav_color.png);
+    width: 35px;
+    height: 35px;
+    background-repeat: no-repeat;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    float:right;
+}
