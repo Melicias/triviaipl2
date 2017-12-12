@@ -20,16 +20,26 @@ $(document).ready(function(){
     var nomeJogador;
     //no array respotas tera o valor 3 caso tenha acertado na respota e tera o valor 0;1;2 caso tenha errada na pergunta e o seu valor ira corresponder a sau posicao no array de incorretas
     var respostas = new Array();
-    var favs = new Array();
+    var topTen = new Array(10);
     var FavQuestions = new Array();
     
     
     if (typeof(Storage) !== "undefined") {
-        localStorage.setItem('topTen', JSON.stringify(favs));
+        //localStorage.setItem('topTen', JSON.stringify(topTen));
         var retrievedObject = localStorage.getItem('FavQuestions');
         FavQuestions = JSON.parse(retrievedObject);
         if(FavQuestions == null){
             FavQuestions = new Array();
+        }
+        var retrievedObject2 = localStorage.getItem('topTen');
+        topTen = JSON.parse(retrievedObject2);
+        if(topTen == null){
+            topTen = new Array(10);
+            for(var i = 0;i<topTen.length;i++){
+                topTen[i] = new Array(2);
+                topTen[i][0] = "";
+                topTen[i][1] = 0;
+            }
         }
     } else {
         alert("Your browser does not support Web Storage...");
@@ -61,9 +71,35 @@ $(document).ready(function(){
     
     
     $(document).on("click","#btnTopTen",function(event){
-        //favQuestions();
+        topTenf();
         event.preventDefault();
     });
+    
+    function topTenf(){
+        var html = "<div id='divTopTen'>\n\
+                        <h1>Top 10 Jogadores</h1>\n\
+                        <table id='tableTopTen'>\n\
+                            <tr>\n\
+                              <th>   Nome   </th>\n\
+                              <th>Pontuação</th>\n\
+                            </tr>";
+        for(var i = 0;i<topTen.length;i++){
+            if(topTen[i][0] == ""){
+                html += "<tr>\n\
+                        <td> </td>\n\
+                        <td> </td>\n\
+                    </tr>";
+            }else{
+                html += "<tr>\n\
+                        <td>"+ topTen[i][0] +"</td>\n\
+                        <td>"+ topTen[i][1] +"</td>\n\
+                    </tr>";
+            }
+        }
+        html+="</table>\n\
+               </div>"
+        $("#contentor").html(html);
+    }
     
     $(document).on("click","#btnFavQuestion",function(event){
         favQuestions();
@@ -220,10 +256,17 @@ $(document).ready(function(){
         localStorage.setItem('nrpergunta', nrpergunta);
         if(perguntas[nrpergunta].type == "boolean"){
             //codigo de html com os botoes verdadeiro e falso.
+            var random = Math.floor((Math.random() * 2) + 1);
             var butoes = "<div id='div_true_false'>\n\
                             <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
-                butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
-                butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
+            //para a correta n ficar sempre em cima
+            if(random == 1){
+                 butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
+                 butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
+            }else{
+                 butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
+                 butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
+            }
                 butoes += "<button id='perguntafav' type='button' class='butaofav_empty'>\n\
                        </div>";
             $("#contentor").html(butoes);
@@ -312,7 +355,8 @@ $(document).ready(function(){
             }
         }
         //generar html com os resultados finais
-        var html =  "<div id='pontuacao' style='overflow-y: scroll;height:100%;'>\n\
+        // style='overflow-y: scroll;height:100%;'
+        var html =  "<div id='pontuacao' >\n\
                         <h1 style='text-align: center' id='hpontuacao'> PONTUACAO FINAL: " + pont + "/" + perguntas.length + "</h1><br><br><br>";
         for(var i = 0; i < perguntas.length; i++){
             html +="<div id='divpontuacao" + i + "' class='divpontuacoes'>\n\
