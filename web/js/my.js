@@ -18,6 +18,7 @@ $(document).ready(function(){
     var perguntas = new Array();
     var nrpergunta = -1;
     var nomeJogador;
+    var pontuacaoFinal;
     //no array respotas tera o valor 3 caso tenha acertado na respota e tera o valor 0;1;2 caso tenha errada na pergunta e o seu valor ira corresponder a sau posicao no array de incorretas
     var respostas = new Array();
     var topTen = new Array(10);
@@ -49,9 +50,9 @@ $(document).ready(function(){
     //REMOVER O COMENTARIO PARA O CODIGO FUNCIONAR
     //Butao adicionar
     $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
-                    <img src='imagens/trivia.png' alt='triviaimg' height='100px' width='200px'>\n\
-                    <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
-          </div>");
+                            <img src='imagens/trivia.png' alt='triviaimg' height='100px' width='200px'>\n\
+                            <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+                         </div>");
 
     $("#butaoIniciarJogo").click(function(){
         //favQuestions();
@@ -338,6 +339,7 @@ $(document).ready(function(){
         if((nrpergunta+1) == (perguntas.length)){
             //CODIGO PARA ACABAR AS PERGUNTAS - mostrar pontuacao
             mostrarPontuacao();
+            verificarTopTen();
             //RESET DO JOGO //RESETAR VARIAVEIS GUARDADAS NO BROWSER
             //resetVariaveis();
             //VOLTAR A PAGINA INICIAL
@@ -354,6 +356,7 @@ $(document).ready(function(){
                 pont++;
             }
         }
+        pontuacaoFinal = pont;
         //generar html com os resultados finais
         // style='overflow-y: scroll;height:100%;'
         var html =  "<div id='pontuacao' >\n\
@@ -369,8 +372,24 @@ $(document).ready(function(){
             
             html += "</div>";
         }
+        html += "<div id='butoesRepetir'>\n\
+                    <button type='button' id='botaoRepetirIgual' class='btn btn-primary jogarNovamente'>Jogar novamento com os mesmo parametros</button>\n\
+                    <button type='button' id='botaoRepetir' class='btn btn-primary jogarNovamente2'>Jogar novamente</button>\n\
+                 </div>";
         html += "</div>"
         $("#contentor").html(html); 
+    }
+    
+    function verificarTopTen(){
+        for(var i = 0;i<topTen.length;i++){
+            if(topTen[i][1] < pontuacaoFinal){
+                var a = [nomeJogador,pontuacaoFinal];
+                topTen.splice(i, 0, a);
+                topTen.pop();
+                localStorage.setItem('topTen', JSON.stringify(topTen));
+                break;
+            }
+        }
     }
     
     function resetVariaveis(){
@@ -381,6 +400,7 @@ $(document).ready(function(){
         perguntas = new Array();
         nrpergunta = -1;
         nomeJogador = "";
+        pontuacaoFinal = 0;
         respostas = new Array();
         localStorage.removeItem("respostas");
         localStorage.removeItem("nrpergunta");
