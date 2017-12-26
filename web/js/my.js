@@ -42,19 +42,52 @@ $(document).ready(function(){
                 topTen[i][1] = 0;
             }
         }
+        var nrper = localStorage.getItem('nrpergunta');
+        if(nrper != null){
+            nrpergunta = parseInt(nrper);
+            nomeJogador = localStorage.getItem('nomeJogador');
+            var retrievedObject3 = localStorage.getItem('perguntas');
+            perguntas = JSON.parse(retrievedObject3);
+            var retrievedObject4 = localStorage.getItem('respostas');
+            respostas = JSON.parse(retrievedObject4);
+            dificuldade = localStorage.getItem('dificuldade');
+            sdificuldade = localStorage.getItem('sdificuldade');
+            categoria = localStorage.getItem('categoria');
+            scategoria = localStorage.getItem('scategoria');
+            $("#contentor").html("<div id='random_menu'>\n\
+                            <h1>O jogo anterior não foi acabado, deseja acabar o jogo ou comecar um novo jogo?</h1>\n\
+                            <button id='butaoAcabarJogo' type='button' style=' margin:30px; height: 100px; font-size: 35px;' class='btn btn-primary'>Acabar o jogo</button>\n\
+                            <button id='butaoComecarNovo' type='button' style=' margin:30px; height: 100px; font-size: 35px;' class='btn btn-primary'>Resetar o jogo</button>\n\
+                            </div>");
+            //comecarAsPerguntas((nrpergunta));
+        }
     } else {
         alert("Your browser does not support Web Storage...");
     }
     
+    $(document).on("click","#butaoAcabarJogo",function(){
+        comecarAsPerguntas((nrpergunta));
+    });
     
-    //REMOVER O COMENTARIO PARA O CODIGO FUNCIONAR
-    //Butao adicionar
-    $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
+    $(document).on("click","#butaoComecarNovo",function(){
+        resetVariaveis();
+        $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
                             <img src='imagens/trivia.png' alt='triviaimg' height='100px' width='200px'>\n\
                             <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
                          </div>");
+    });
+    
+    //REMOVER O COMENTARIO PARA O CODIGO FUNCIONAR
+    //Butao adicionar
+    if(nrpergunta == -1){
+        $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
+                            <img src='imagens/trivia.png' alt='triviaimg' height='100px' width='200px'>\n\
+                            <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+                         </div>");
+    }
+    
 
-    $("#butaoIniciarJogo").click(function(){
+    $(document).on("click","#butaoIniciarJogo",function(){
         //favQuestions();
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
                                 <h1>Escolha a Dificuldade</h1>\n\
@@ -64,7 +97,8 @@ $(document).ready(function(){
     });
     
     $("#btnHome").click(function(){
-         $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
+        resetVariaveis();
+        $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
                                 <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
                              </div>");
     });
@@ -98,9 +132,25 @@ $(document).ready(function(){
             }
         }
         html+="</table>\n\
+                <button id='butaoResetarTopTen' type='button' style='margin:15px; height: 50px;' class='btn btn-primary btn-lg' >Resetar o top 10 jogadores</button>\n\
                </div>"
         $("#contentor").html(html);
     }
+    
+    $(document).on("click","#butaoResetarTopTen",function(event){
+        if (typeof(Storage) !== "undefined") {
+            topTen = new Array(10);
+            for(var i = 0;i<topTen.length;i++){
+                topTen[i] = new Array(2);
+                topTen[i][0] = "";
+                topTen[i][1] = 0;
+            }
+            localStorage.setItem('topTen', JSON.stringify(topTen));
+            topTenf();
+        } else {
+            alert("Your browser does not support Web Storage...");
+        }
+    });
     
     $(document).on("click","#btnFavQuestion",function(event){
         favQuestions();
@@ -239,6 +289,10 @@ $(document).ready(function(){
             if (typeof(Storage) !== "undefined") {
                 localStorage.setItem('perguntas', JSON.stringify(perguntas));
                 localStorage.setItem('nomeJogador', nomeJogador);
+                localStorage.setItem('dificuldade', dificuldade);
+                localStorage.setItem('sdificuldade', sdificuldade);
+                localStorage.setItem('categoria', categoria);
+                localStorage.setItem('scategoria', scategoria);
                 //get local storage
                 //var retrievedObject = localStorage.getItem('perguntas');
                 //perguntas = JSON.parse(retrievedObject);
@@ -341,6 +395,7 @@ $(document).ready(function(){
             mostrarPontuacao();
             verificarTopTen();
             //RESET DO JOGO //RESETAR VARIAVEIS GUARDADAS NO BROWSER
+            resetAlgumasVariaveis();
             //resetVariaveis();
             //VOLTAR A PAGINA INICIAL
         }else{
@@ -364,10 +419,12 @@ $(document).ready(function(){
         for(var i = 0; i < perguntas.length; i++){
             html +="<div id='divpontuacao" + i + "' class='divpontuacoes'>\n\
                         <h3>" + (i+1) + " - " + perguntas[i].question + "</h3>\n\
-                        <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + perguntas[i].correct_answer + "</button>";
+                        <h4>Resposta correta:</h4><button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + perguntas[i].correct_answer + "</button>";
             
             if(respostas[i] != 3){
-                html += "<button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>" + perguntas[i].incorrect_answers[respostas[i]]; + "</button>";
+                html += "<h4>Resposta selecionada: </h4><button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>" + perguntas[i].incorrect_answers[respostas[i]]; + "</button>";
+            }else{
+                html += "<h4>Resposta selecionada:</h4><button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + perguntas[i].correct_answer + "</button>";
             }
             
             html += "</div>";
@@ -379,6 +436,21 @@ $(document).ready(function(){
         html += "</div>"
         $("#contentor").html(html); 
     }
+    
+    $(document).on("click","#botaoRepetirIgual",function(){
+        respostas = new Array();
+        pontuacaoFinal = 0;
+        generarLinkAPI();
+    });
+    
+    $(document).on("click","#botaoRepetir",function(){
+        resetVariaveis();
+        $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
+                                <h1>Escolha a Dificuldade</h1>\n\
+                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Fácil</button>\n\
+                                <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Média</button>\n\
+                            </div>"); 
+    });
     
     function verificarTopTen(){
         for(var i = 0;i<topTen.length;i++){
@@ -406,6 +478,20 @@ $(document).ready(function(){
         localStorage.removeItem("nrpergunta");
         localStorage.removeItem("perguntas");
         localStorage.removeItem("nomeJogador");
+        localStorage.removeItem("dificuldade");
+        localStorage.removeItem("sdificuldade");
+        localStorage.removeItem("categoria");
+        localStorage.removeItem("scategoria");
+    }
+    
+    function resetAlgumasVariaveis(){
+        perguntas = new Array();
+        nrpergunta = -1;
+        pontuacaoFinal = 0;
+        respostas = new Array();
+        localStorage.removeItem("respostas");
+        localStorage.removeItem("nrpergunta");
+        localStorage.removeItem("perguntas");
     }
     
     //https://www.w3schools.com/html/html5_webstorage.asp
