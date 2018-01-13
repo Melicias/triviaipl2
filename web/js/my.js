@@ -247,8 +247,8 @@ $(document).ready(function(){
     }
     
     
-    $(document).on("click",".butoesCategoria",function(event){
-        escolherCategoria($(event.target).value,$(event.target).text());
+    $(document).on("click",".butoesCategoria",function(){
+        escolherCategoria($(this).val(),$(this).text());
     });
     
     $(document).on("click","#botaoRandom",function(){
@@ -260,7 +260,7 @@ $(document).ready(function(){
         categoria = cat;
         scategoria = scat;
         if(cat == -1){
-            var random = Math.floor((Math.random() * arrayCategorias.length) + 1);
+            var random = Math.floor((Math.random() * arrayCategorias.length));
             categoria = arrayCategorias[random].id;
             scategoria = arrayCategorias[random].name;
         }
