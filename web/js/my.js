@@ -1,4 +1,4 @@
-/* LINK
+ /* LINK
  * https://opentdb.com/api.php?amount=10&category=18&difficulty=easy
  * 
  * A dificuldade pode ser easy ou medium
@@ -23,6 +23,7 @@ $(document).ready(function(){
     var respostas = new Array();
     var topTen = new Array(10);
     var FavQuestions = new Array();
+    var arrayCategorias = new Array();
     
     
     if (typeof(Storage) !== "undefined") {
@@ -37,9 +38,11 @@ $(document).ready(function(){
         if(topTen == null){
             topTen = new Array(10);
             for(var i = 0;i<topTen.length;i++){
-                topTen[i] = new Array(2);
+                topTen[i] = new Array(4);
                 topTen[i][0] = "";
                 topTen[i][1] = 0;
+                topTen[i][2] = "";
+                topTen[i][3] = "";
             }
         }
         var nrper = localStorage.getItem('nrpergunta');
@@ -55,9 +58,9 @@ $(document).ready(function(){
             categoria = localStorage.getItem('categoria');
             scategoria = localStorage.getItem('scategoria');
             $("#contentor").html("<div id='random_menu'>\n\
-                            <h1>O jogo anterior não foi acabado, deseja acabar o jogo ou comecar um novo jogo?</h1>\n\
-                            <button id='butaoAcabarJogo' type='button' style=' margin:30px; height: 100px; font-size: 35px;' class='btn btn-primary'>Acabar o jogo</button>\n\
-                            <button id='butaoComecarNovo' type='button' style=' margin:30px; height: 100px; font-size: 35px;' class='btn btn-primary'>Resetar o jogo</button>\n\
+                            <h1>The previous game was not finished, you prefer to end the game or starting a new one?</h1>\n\
+                            <button id='butaoAcabarJogo' type='button' style=' margin:30px; height: 100px; font-size: 35px;' class='btn btn-primary'>Finish the game</button>\n\
+                            <button id='butaoComecarNovo' type='button' style=' margin:30px; height: 100px; font-size: 35px;' class='btn btn-primary'>Restart the game</button>\n\
                             </div>");
             //comecarAsPerguntas((nrpergunta));
         }
@@ -73,7 +76,7 @@ $(document).ready(function(){
         resetVariaveis();
         $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
                             <img src='imagens/trivia.png' alt='triviaimg' height='100px' width='200px'>\n\
-                            <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+                            <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Start game</button>\n\
                          </div>");
     });
     
@@ -82,24 +85,23 @@ $(document).ready(function(){
     if(nrpergunta == -1){
         $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
                             <img src='imagens/trivia.png' alt='triviaimg' height='100px' width='200px'>\n\
-                            <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+                            <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Start game</button>\n\
                          </div>");
     }
     
 
     $(document).on("click","#butaoIniciarJogo",function(){
-        //favQuestions();
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
-                                <h1>Escolha a Dificuldade</h1>\n\
-                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Fácil</button>\n\
-                                <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Média</button>\n\
+                                <h1>Choose a difficulty</h1>\n\
+                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Eazy</button>\n\
+                                <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Medium</button>\n\
                             </div>");  
     });
     
     $("#btnHome").click(function(){
         resetVariaveis();
         $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
-                                <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+                                <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Start game</button>\n\
                              </div>");
     });
     
@@ -112,15 +114,19 @@ $(document).ready(function(){
     
     function topTenf(){
         var html = "<div id='divTopTen'>\n\
-                        <h1>Top 10 Jogadores</h1>\n\
+                        <h1>Top 10 Players</h1>\n\
                         <table id='tableTopTen'>\n\
                             <tr>\n\
-                              <th>   Nome   </th>\n\
-                              <th>Pontuação</th>\n\
+                              <th>   Name   </th>\n\
+                              <th>Score</th>\n\
+                              <th>Difficulty</th>\n\
+                              <th>Category</th>\n\
                             </tr>";
         for(var i = 0;i<topTen.length;i++){
             if(topTen[i][0] == ""){
                 html += "<tr>\n\
+                        <td> </td>\n\
+                        <td> </td>\n\
                         <td> </td>\n\
                         <td> </td>\n\
                     </tr>";
@@ -128,11 +134,13 @@ $(document).ready(function(){
                 html += "<tr>\n\
                         <td>"+ topTen[i][0] +"</td>\n\
                         <td>"+ topTen[i][1] +"</td>\n\
+                        <td>"+ topTen[i][2] +"</td>\n\
+                        <td>"+ topTen[i][3] +"</td>\n\
                     </tr>";
             }
         }
         html+="</table>\n\
-                <button id='butaoResetarTopTen' type='button' style='margin:15px; height: 50px;' class='btn btn-primary btn-lg' >Resetar o top 10 jogadores</button>\n\
+                <button id='butaoResetarTopTen' type='button' style='margin:15px; height: 50px;' class='btn btn-primary btn-lg' >Reset top 10 players</button>\n\
                </div>"
         $("#contentor").html(html);
     }
@@ -144,6 +152,8 @@ $(document).ready(function(){
                 topTen[i] = new Array(2);
                 topTen[i][0] = "";
                 topTen[i][1] = 0;
+                topTen[i][2] = "";
+                topTen[i][3] = "";
             }
             localStorage.setItem('topTen', JSON.stringify(topTen));
             topTenf();
@@ -181,9 +191,22 @@ $(document).ready(function(){
             }
         }
         html+="</div>"
+        
+        if(FavQuestions.length == 0){
+            html = "<div id='random_div' style='text-align: center;'><h1>You don't have any question marked as favorite, so play some games and some questions!</h1>";
+            html += "<button id='playGameFromFav' type='button' style=' margin:30px;  height: 100px; font-size: 50px;' class='btn btn-primary'>Play</button></div>";
+        }
+        
         $("#contentor").html(html);
     }
     
+    $(document).on("click","#playGameFromFav",function(){
+        $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
+                                <h1>Choose a difficulty</h1>\n\
+                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Easy</button>\n\
+                                <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Medium</button>\n\
+                            </div>");  
+    });
     
     $(document).on("click","#perguntafavFavQuestions",function(){
         FavQuestions.splice($(this).val(),1);
@@ -194,67 +217,51 @@ $(document).ready(function(){
     
     
     $(document).on("click","#butaoDificuldadeFacil",function(){
-	sdificuldade = "Fácil";
+	sdificuldade = "Easy";
         escolherDificuldade("easy");
     });
     $(document).on("click","#butaoDificuldadeMedia",function(){
-	sdificuldade = "Média";
+	sdificuldade = "Medium";
         escolherDificuldade("medium");
     });
     
     
     function escolherDificuldade(id){
         dificuldade = id;
-        $("#contentor").html("<div id='div_escolher_categoria'>\n\
-                                <h1>Escolha a categoria</h1>\n\
-                                <button type='button' id='botaoinformatica' class='btn btn-primary butoesCategoria'>Informática</button>\n\
-                                <button type='button' id='botaojogos' class='btn btn-primary butoesCategoria'>Video-Jogos</button>\n\
-                                <button type='button' id='botaodesporto' class='btn btn-primary butoesCategoria'>Desporto</button>\n\
-                                <button type='button' id='botaoRandom' class='btn btn-primary butoesCategoria'>Random</button>\n\
-                              </div>"); 
+        var link = "https://opentdb.com/api_category.php";
+        $.getJSON(link, function(data) {
+            arrayCategorias = data.trivia_categories;
+            var html = "<div id='div_escolher_categoria'>";
+            if(arrayCategorias == null){
+                html += "<h1>ERROR LOADING DATABASE DATA</h1>";
+            }else{
+                html +="<h1>Choose a category</h1><br><button type='button' id='botaoRandom' class='btn btn-primary butoesCategoriaRandom'>Random</button><br>";
+                for(var i = 0;i <arrayCategorias.length;i++){
+                    html += "<button type='button' value='"+arrayCategorias[i].id+"' class='btn btn-primary butoesCategoria'>"+ arrayCategorias[i].name +"</button><br>";
+                }
+            }
+            html += "</div>";
+            $("#contentor").html(html);
+        });
     }
     
-    $(document).on("click","#botaoinformatica",function(){
-	scategoria = "Informática";
-        escolherCategoria(18);
-    });
     
-    $(document).on("click","#botaojogos",function(){
-	scategoria = "Video-Jogos";
-        escolherCategoria(15);
-    });
-    
-    $(document).on("click","#botaodesporto",function(){
-	scategoria = "Desporto";
-        escolherCategoria(21);
+    $(document).on("click",".butoesCategoria",function(event){
+        escolherCategoria($(event.target).value,$(event.target).text());
     });
     
     $(document).on("click","#botaoRandom",function(){
-        escolherCategoria(-1);
+        escolherCategoria(-1,"");
     });
     
     
-    function escolherCategoria(cat){
+    function escolherCategoria(cat,scat){
         categoria = cat;
+        scategoria = scat;
         if(cat == -1){
-            var random = Math.floor((Math.random() * 3) + 1);
-            switch(random){
-                case 1:
-                    categoria = 18;
-                    scategoria = "Informática";
-                    break;
-                case 2:
-                    categoria = 15;
-                    scategoria = "Video-Jogos";
-                    break;
-                case 3:
-                    categoria = 21;
-                    scategoria = "Desporto";
-                    break;
-                default:
-                    categoria = 18;
-                    scategoria = "Informática";
-            }
+            var random = Math.floor((Math.random() * arrayCategorias.length) + 1);
+            categoria = arrayCategorias[random].id;
+            scategoria = arrayCategorias[random].name;
         }
         iniciarJogo();
         //generarLinkAPI();
@@ -262,11 +269,11 @@ $(document).ready(function(){
 	
     function iniciarJogo(){
         $("#contentor").html("<div id='div_iniciar_jogo'>\n\
-                        <h2>Opções do jogo</h2><br>\n\
-                        <h3>Dificuldade: "+ sdificuldade +"</h3><br>\n\
-                        <h3>Categoria: "+ scategoria +" </h3><br>\n\
-                        <input type='text' id='username' name='username' placeholder='Introduza o seu nome...' style=text-align:center><br>\n\
-                        <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
+                        <h2>Game settings</h2><br>\n\
+                        <h3>Difficulty: "+ sdificuldade +"</h3><br>\n\
+                        <h3>Category: "+ scategoria +" </h3><br>\n\
+                        <input type='text' id='username' name='username' placeholder='Your name...' style=text-align:center><br>\n\
+                        <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Start</button>\n\
                     </div>"); 
       
     }
@@ -276,35 +283,46 @@ $(document).ready(function(){
             if(nomeJogador != "" && nomeJogador.length > 2){
                 generarLinkAPI();
             }else{
-                alert("O nome tem de ter pelo menos 3 carateres!");
+                alert("Name must have at least 3 characters!");
             }
     });
     
     function generarLinkAPI(){
         var link = "https://opentdb.com/api.php?amount=10&category=" + categoria + "&difficulty="+ dificuldade;
         $.getJSON(link, function(data) {
-            //data is the JSON string
-            //criar array com isto, e assim que s saca a informacao do data
-            perguntas = data.results;
-            if (typeof(Storage) !== "undefined") {
-                localStorage.setItem('perguntas', JSON.stringify(perguntas));
-                localStorage.setItem('nomeJogador', nomeJogador);
-                localStorage.setItem('dificuldade', dificuldade);
-                localStorage.setItem('sdificuldade', sdificuldade);
-                localStorage.setItem('categoria', categoria);
-                localStorage.setItem('scategoria', scategoria);
-                //get local storage
-                //var retrievedObject = localStorage.getItem('perguntas');
-                //perguntas = JSON.parse(retrievedObject);
-                
-                //Envio o 0 para comecar a contar desde o 0;
-                comecarAsPerguntas(0);
-            } else {
-                alert("Your browser does not support Web Storage...");
+            if(data.response_code == 0){
+                //data is the JSON string
+                //criar array com isto, e assim que s saca a informacao do data
+                perguntas = data.results;
+                if (typeof(Storage) !== "undefined") {
+                    localStorage.setItem('perguntas', JSON.stringify(perguntas));
+                    localStorage.setItem('nomeJogador', nomeJogador);
+                    localStorage.setItem('dificuldade', dificuldade);
+                    localStorage.setItem('sdificuldade', sdificuldade);
+                    localStorage.setItem('categoria', categoria);
+                    localStorage.setItem('scategoria', scategoria);
+                    //get local storage
+                    //var retrievedObject = localStorage.getItem('perguntas');
+                    //perguntas = JSON.parse(retrievedObject);
+
+                    //Envio o 0 para comecar a contar desde o 0;
+                    comecarAsPerguntas(0);
+                } else {
+                    alert("Your browser does not support Web Storage...");
+                }
+            }else{
+                $("#contentor").html("<div id='div_escolher_dificuldade'><h1>Something went bad, try with another parameter</h1><br><button id='escolherDificuldadeAgain' type='button' style=' margin:30px; width:500px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Change parameters</button></div>"); 
             }
-            
         });
     }
+    
+    $(document).on("click","#escolherDificuldadeAgain",function(){
+        $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
+                                <h1>Choose a difficulty</h1>\n\
+                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Easy</button>\n\
+                                <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Medium</button>\n\
+                            </div>");  
+    });
     
     function comecarAsPerguntas(id){
         nrpergunta = id;
@@ -414,24 +432,36 @@ $(document).ready(function(){
         pontuacaoFinal = pont;
         //generar html com os resultados finais
         // style='overflow-y: scroll;height:100%;'
+        var correto = 0;
+         
         var html =  "<div id='pontuacao' >\n\
-                        <h1 style='text-align: center' id='hpontuacao'> PONTUACAO FINAL: " + pont + "/" + perguntas.length + "</h1><br><br><br>";
+                        <h1 style='text-align: center' id='hpontuacao'>FINAL SCORE: " + pont + "/" + perguntas.length + "</h1><br><br><br>";
+        html += "<div id='butoesRepetir'>\n\
+                    <button type='button' id='botaoRepetirIgual' class='btn btn-primary jogarNovamente'>Play again with same parameters</button>\n\
+                    <button type='button' id='botaoRepetir' class='btn btn-primary jogarNovamente2'>Play again</button>\n\
+                 </div>";
         for(var i = 0; i < perguntas.length; i++){
             html +="<div id='divpontuacao" + i + "' class='divpontuacoes'>\n\
                         <h3>" + (i+1) + " - " + perguntas[i].question + "</h3>\n\
-                        <h4>Resposta correta:</h4><button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + perguntas[i].correct_answer + "</button>";
+                        <h4>Correct answer:</h4><button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + perguntas[i].correct_answer + "</button>";
             
             if(respostas[i] != 3){
-                html += "<h4>Resposta selecionada: </h4><button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>" + perguntas[i].incorrect_answers[respostas[i]]; + "</button>";
+                html += "<h4>Selected answer:</h4><button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>" + perguntas[i].incorrect_answers[respostas[i]] + "</button>";
             }else{
-                html += "<h4>Resposta selecionada:</h4><button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + perguntas[i].correct_answer + "</button>";
+                correto = 1;
+                html += "<h4>Selected answer:</h4><button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + perguntas[i].correct_answer + "</button>";
             }
-            
+            if(correto == 1){
+                html +="<img src='imagens/right.png' class='imagens'>";
+                correto = 0;
+            }else{
+                html +="<img src='imagens/cross.png' class='imagens'>";
+            }
             html += "</div>";
         }
         html += "<div id='butoesRepetir'>\n\
-                    <button type='button' id='botaoRepetirIgual' class='btn btn-primary jogarNovamente'>Jogar novamento com os mesmo parametros</button>\n\
-                    <button type='button' id='botaoRepetir' class='btn btn-primary jogarNovamente2'>Jogar novamente</button>\n\
+                    <button type='button' id='botaoRepetirIgual' class='btn btn-primary jogarNovamente'>Play again with same parameters</button>\n\
+                    <button type='button' id='botaoRepetir' class='btn btn-primary jogarNovamente2'>Play again</button>\n\
                  </div>";
         html += "</div>"
         $("#contentor").html(html); 
@@ -447,15 +477,15 @@ $(document).ready(function(){
         resetVariaveis();
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
                                 <h1>Escolha a Dificuldade</h1>\n\
-                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Fácil</button>\n\
-                                <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Média</button>\n\
+                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Easy</button>\n\
+                                <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Medium</button>\n\
                             </div>"); 
     });
     
     function verificarTopTen(){
         for(var i = 0;i<topTen.length;i++){
             if(topTen[i][1] < pontuacaoFinal){
-                var a = [nomeJogador,pontuacaoFinal];
+                var a = [nomeJogador,pontuacaoFinal,dificuldade,scategoria ];
                 topTen.splice(i, 0, a);
                 topTen.pop();
                 localStorage.setItem('topTen', JSON.stringify(topTen));
