@@ -25,6 +25,7 @@ $(document).ready(function(){
     var FavQuestions = new Array();
     var arrayCategorias = new Array();
     
+//    localStorage.clear();
     
     if (typeof(Storage) !== "undefined") {
         //localStorage.setItem('topTen', JSON.stringify(topTen));
@@ -93,7 +94,7 @@ $(document).ready(function(){
     $(document).on("click","#butaoIniciarJogo",function(){
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
                                 <h1>Choose a difficulty</h1>\n\
-                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Eazy</button>\n\
+                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Easy</button>\n\
                                 <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Medium</button>\n\
                             </div>");  
     });
@@ -325,12 +326,13 @@ $(document).ready(function(){
     });
     
     function comecarAsPerguntas(id){
+        localStorage.setItem('respostas', JSON.stringify(respostas));
         nrpergunta = id;
         localStorage.setItem('nrpergunta', nrpergunta);
         if(perguntas[nrpergunta].type == "boolean"){
             //codigo de html com os botoes verdadeiro e falso.
             var random = Math.floor((Math.random() * 2) + 1);
-            var butoes = "<div id='div_true_false'>\n\
+            var butoes = "<div class='div_true_false'>\n\
                             <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
             //para a correta n ficar sempre em cima
             if(random == 1){
@@ -340,14 +342,14 @@ $(document).ready(function(){
                  butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
                  butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
             }
-                butoes += "<button id='perguntafav' type='button' class='butaofav_empty'>\n\
+                butoes += "<button id='perguntafav' type='button' class='butaofav_empty'></button>\n\
                        </div>";
             $("#contentor").html(butoes);
         }else{
             //codigo para escolher um botao aleatoriamente para ser a opcao certa.
             //O primeiro numero do array vai ser o numero que tera a resposta correta
             var correto = Math.floor((Math.random() * 4) + 1);
-            var butoes = "<div id='div_escolha_multipla'>\n\
+            var butoes = "<div class='div_escolha_multipla'>\n\
                             <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
             var ii = 0;	
             for(var i=1;i<=4;i++){
@@ -362,7 +364,7 @@ $(document).ready(function(){
             }
             
             //butoes += "</div>";
-            butoes += "     <button id='perguntafav' type='button' class='butaofav_empty'>\n\
+            butoes += "     <button id='perguntafav' type='button' class='butaofav_empty'></button>\n\
                        </div>";
             
             //adicionar a variavel butoes butoes para adicionar aos favs. FALTA FAZER ISTO

@@ -84,11 +84,6 @@ body{
     margin: 0 auto;  
 }
 
-#div_escolha_multipla{
-    display: table;
-    margin: 0 auto; 
-}
-
 .divpontuacoes{
     border: 5px solid grey;
     margin: 25px 50px 10px 10px;
@@ -151,6 +146,7 @@ body{
 
 #divTopTen{
     text-align: center;
+    margin-bottom: 150px;
 }
 
 #tableTopTen, #tableTopTen td, #tableTopTen th{
@@ -191,4 +187,24 @@ body{
     height: 4%;
     width: 4%;
     float:right;
+}
+
+.div_true_false{
+    margin-bottom: 150px;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+}
+
+.div_escolha_multipla{
+    margin-bottom: 150px;
+    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+}
+
+#random_menu{
+    margin-bottom: 150px;
 }
